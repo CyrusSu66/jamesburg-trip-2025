@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamesburg NJ 平價美食與週末出遊規劃✨</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; }
+        header { background: linear-gradient(135deg, #FF6B6B, #4ECDC4); color: white; text-align: center; padding: 40px 20px; position: relative; }
+        header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>'); opacity: 0.5; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; position: relative; z-index: 1; }
+        nav { display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); }
+        nav button { flex: 1; padding: 18px; background: none; color: #333; border: none; cursor: pointer; font-size: 16px; font-weight: 500; transition: all 0.3s; position: relative; }
+        nav button::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 3px; background: linear-gradient(90deg, #FF6B6B, #4ECDC4); transition: all 0.3s; transform: translateX(-50%); }
+        nav button.active::after { width: 80%; }
+        nav button:hover { background: rgba(255,107,107,0.1); color: #FF6B6B; }
+        .tabcontent { display: none; padding: 40px; min-height: 60vh; }
+        .tabcontent.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        h2 { color: #FF6B6B; font-size: 2em; margin-bottom: 30px; text-align: center; position: relative; }
+        h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; width: 60px; height: 4px; background: linear-gradient(90deg, #FF6B6B, #4ECDC4); transform: translateX(-50%); border-radius: 2px; }
+        .hero-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin: 40px 0; }
+        .card { background: linear-gradient(145deg, #ffffff, #f0f0f0); border-radius: 20px; padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); transition: all 0.4s; position: relative; overflow: hidden; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+        .card h3 { color: #4ECDC4; font-size: 1.5em; margin-bottom: 15px; }
+        .card p { color: #555; line-height: 1.8; margin-bottom: 20px; }
+        .highlight { background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%); padding: 20px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #FF6B6B; }
+        .itinerary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .itinerary-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 20px; position: relative; }
+        .itinerary-card::before { content: '🗺️'; position: absolute; top: 20px; right: 20px; font-size: 2em; opacity: 0.3; }
+        .time-slot {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            border-left: 5px solid #4ECDC4;
+        }
+        .time-slot:last-child { margin-bottom: 0; }
+        .time-label {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #4ECDC4;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .time-desc { line-height: 1.7; margin-top: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        th { background: linear-gradient(135deg, #FF6B6B, #4ECDC4); color: white; padding: 20px; text-align: left; font-weight: 600; }
+        td { padding: 18px 20px; border-bottom: 1px solid #eee; vertical-align: top; }
+        tr:nth-child(even) { background: #f8f9ff; }
+        tr:hover { background: #e3f2fd; }
+        .price { font-weight: bold; color: #4CAF50; font-size: 1.1em; }
+        .citation {
+            font-size: 0.8em; color: #FF6B6B; text-decoration: none;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; cursor: pointer; padding: 2px 6px;
+            border-radius: 12px; display: inline-block; transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(255,107,107,0.3);
+        }
+        .citation:hover { transform: scale(1.1); box-shadow: 0 4px 15px rgba(255,107,107,0.5); }
+        .citation::after { content: '↗️'; font-size: 0.7em; margin-left: 1px; }
+        .citation:active { transform: scale(0.95); }
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8em; }
+            nav { flex-direction: column; }
+            .hero-grid, .itinerary-grid { grid-template-columns: 1fr; }
+            .tabcontent { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌟 Jamesburg NJ 週末出遊指南</h1>
+            <p>平價美食 + 半天一日輕鬆行程，適合家庭與朋友出遊 <a href="https://www.tripadvisor.com/Attractions-g46530-Activities-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:31]</a><a href="https://getoutsidenj.com/places/30-outdoor-fun/?locid=65659" target="_blank" class="citation">[web:21]</a></p>
+        </header>
+        
+        <nav>
+            <button onclick="showTab('itinerary')" class="active">🚀 推薦行程</button>
+            <button onclick="showTab('attractions')">🏞️ 景點大全</button>
+            <button onclick="showTab('restaurants')">🍔 美食推薦</button>
+        </nav>
+        
+        <div id="itinerary" class="tabcontent active">
+            <h2>📅 精選3組週末行程</h2>
+            <div class="itinerary-grid">
+                <div class="itinerary-card">
+                    <h3>🌳 半天自然探索 (3-4小時)</h3>
+                    <div class="highlight">從家裡5分鐘直達！超方便家庭出遊</div>
+                    
+                    <div class="time-slot">
+                        <span class="time-label">上午9:00-12:00</span>
+                        <div class="time-desc"><a href="https://www.monmouthcountyparks.com/page.aspx?Id=2539" target="_blank" class="citation">[web:42]</a> Thompson Park動物園餵鹿鴨、湖邊散步、兒童遊樂場</div>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <span class="time-label">中午12:30</span>
+                        <div class="time-desc"><a href="https://www.tripadvisor.com/Restaurant_Review-g46530-d5771827-Reviews-Taqueria_Maria_s-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:48]</a> Taqueria Maria's墨西哥塔可 ($8-12)，辣度可調整超滿足</div>
+                    </div>
+                </div>
+                
+                <div class="itinerary-card">
+                    <h3>🎨 一日藝術之旅 (6-8小時)</h3>
+                    <div class="highlight">20分鐘車程抵達國際級雕塑公園！</div>
+                    
+                    <div class="time-slot">
+                        <span class="time-label">上午10:00</span>
+                        <div class="time-desc"><a href="https://www.tripadvisor.com/Attraction_Review-g46487-d557397-Reviews-Grounds_For_Sculpture-Hamilton_New_Jersey.html" target="_blank" class="citation">[web:54]</a> Grounds For Sculpture 42英畝戶外藝術，花園野餐超chill</div>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <span class="time-label">下午2:00</span>
+                        <div class="time-desc"><a href="https://www.tripadvisor.com/Restaurant_Review-g46530-d8724686-Reviews-Don_Pepe_s-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:7]</a> Don Pepe's秘魯烤雞套餐 ($27雙人份)</div>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <span class="time-label">傍晚5:00</span>
+                        <div class="time-desc"><a href="https://www.tripadvisor.com/Attraction_Review-g46530-d27078898-Reviews-Tillie_Davison_Park-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:41]</a> Tillie Davison Park看夕陽結束</div>
+                    </div>
+                </div>
+                
+                <div class="itinerary-card">
+                    <h3>🎢 刺激家庭日 (4-6小時)</h3>
+                    <div class="highlight">適合愛冒險的年輕人與家庭！</div>
+                    
+                    <div class="time-slot">
+                        <span class="time-label">上午10:00</span>
+                        <div class="time-desc"><a href="https://www.sixflags.com/greatadventure" target="_blank" class="citation">[web:47]</a> Six Flags Great Adventure雲霄飛車、水上樂園</div>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <span class="time-label">下午3:00</span>
+                        <div class="time-desc"><a href="https://www.tripadvisor.com/Restaurants-g46530-zfp16-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:6]</a> Bovine Burgers巨無霸漢堡 ($10-15)</div>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.95em;">門票建議線上預購</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="attractions" class="tabcontent">
+            <h2>🏞️ 附近熱門景點</h2>
+            <div class="hero-grid">
+                <div class="card">
+                    <h3>🦌 Thompson Park</h3>
+                    <p>Jamesburg地標公園！免費動物園可餵鹿鴨，還有湖泊步道、棒球場、兒童遊樂設施。週末超熱門，早點到才有好位置野餐 <a href="https://www.monmouthcountyparks.com/page.aspx?Id=2539" target="_blank" class="citation">[web:42]</a><a href="https://www.yelp.com/biz/thompson-park-jamesburg" target="_blank" class="citation">[web:44]</a>。</p>
+                </div>
+                <div class="card">
+                    <h3>🌸 Tillie Davison Park</h3>
+                    <p>當地人最愛的休閒公園，步道、鞦韆、野餐區齊全。適合遛狗、家庭聚會，傍晚看夕陽絕美 <a href="https://www.tripadvisor.com/Attraction_Review-g46530-d27078898-Reviews-Tillie_Davison_Park-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:41]</a>。</p>
+                </div>
+                <div class="card">
+                    <h3>🗿 Grounds For Sculpture</h3>
+                    <p>全美知名42英畝雕塑公園，超過300件現代藝術品環繞歐式花園。咖啡廳、禮品店一應俱全，藝術迷必訪 <a href="https://www.tripadvisor.com/Attraction_Review-g46487-d557397-Reviews-Grounds_For_Sculpture-Hamilton_New_Jersey.html" target="_blank" class="citation">[web:54]</a>。</p>
+                </div>
+                <div class="card">
+                    <h3>🎢 Six Flags Great Adventure</h3>
+                    <p>野生動物園+50+項遊樂設施，Kingda Ka是全美最高雲霄飛車！夏天還有水上樂園 <a href="https://www.sixflags.com/greatadventure" target="_blank" class="citation">[web:47]</a>。</p>
+                </div>
+            </div>
+            
+            <table>
+                <tr><th>景點</th><th>距離</th><th>門票</th><th>最佳時間</th></tr>
+                <tr><td>Thompson Park</td><td>5分內</td><td>免費</td><td>週末上午 <a href="https://www.monmouthcountyparks.com/page.aspx?Id=2539" target="_blank" class="citation">[web:42]</a></td></tr>
+                <tr><td>Tillie Davison</td><td>本地</td><td>免費</td><td>傍晚散步 <a href="https://www.tripadvisor.com/Attraction_Review-g46530-d27078898-Reviews-Tillie_Davison_Park-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:41]</a></td></tr>
+                <tr><td>Grounds For Sculpture</td><td>20-30分</td><td>$20起</td><td>春夏花季 <a href="https://www.tripadvisor.com/Attraction_Review-g46487-d557397-Reviews-Grounds_For_Sculpture-Hamilton_New_Jersey.html" target="_blank" class="citation">[web:54]</a></td></tr>
+                <tr><td>Six Flags</td><td>20-30分</td><td>$50起</td><td>晴天假日 <a href="https://www.sixflags.com/greatadventure" target="_blank" class="citation">[web:47]</a></td></tr>
+            </table>
+        </div>
+        
+        <div id="restaurants" class="tabcontent">
+            <h2>🍔 Jamesburg平價美食</h2>
+            <p style="text-align: center; font-size: 1.1em; color: #666; margin-bottom: 40px;">人均$10-20，當地人氣選擇，味道保證 <a href="https://www.tripadvisor.com/Restaurants-g46530-zfp16-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:6]</a><a href="https://www.yelp.com/search?find_desc=Cheap+Eats&find_loc=Jamesburg%2C+NJ+08831" target="_blank" class="citation">[web:17]</a></p>
+            
+            <div class="hero-grid">
+                <div class="card">
+                    <h3>🌮 Taqueria Maria's</h3>
+                    <p>正宗墨西哥小館！手工塔可超酥脆，Fajitas鐵板滋滋響，辣醬自己調。當地人排隊店家，外帶也很方便 <a href="https://www.tripadvisor.com/Restaurant_Review-g46530-d5771827-Reviews-Taqueria_Maria_s-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:48]</a>。</p>
+                </div>
+                <div class="card">
+                    <h3>🍔 Bovine Burgers</h3>
+                    <p>巨無霸手工漢堡，牛肉多汁薯條酥脆，還有奶昔創意口味。份量超大，兩人share剛好 <a href="https://www.tripadvisor.com/Restaurants-g46530-zfp16-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:6]</a>。</p>
+                </div>
+                <div class="card">
+                    <h3>🥩 Don Pepe's</h3>
+                    <p>秘魯烤雞香料絕妙，$27雙人套餐超划算！玉米蛋糕搭配烤肉，風味獨特令人上癮 <a href="https://www.tripadvisor.com/Restaurant_Review-g46530-d8724686-Reviews-Don_Pepe_s-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:7]</a>。</p>
+                </div>
+            </div>
+            
+            <table>
+                <tr><th>店名</th><th>地址</th><th>招牌菜</th><th>價格</th></tr>
+                <tr><td>Taqueria Maria's</td><td>51 Dayton Rd, Jamesburg</td><td>塔可/鐵板牛肉</td><td class="price">$8-12 <a href="https://www.tripadvisor.com/Restaurant_Review-g46530-d5771827-Reviews-Taqueria_Maria_s-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:48]</a></td></tr>
+                <tr><td>Bovine Burgers</td><td>Jamesburg市中心</td><td>雙層牛堡/奶昔</td><td class="price">$10-15 <a href="https://www.tripadvisor.com/Restaurants-g46530-zfp16-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:6]</a></td></tr>
+                <tr><td>Don Pepe's</td><td>25 E Railroad Ave</td><td>秘魯烤雞套餐</td><td class="price">$$15-25 <a href="https://www.tripadvisor.com/Restaurant_Review-g46530-d8724686-Reviews-Don_Pepe_s-Jamesburg_New_Jersey.html" target="_blank" class="citation">[web:7]</a></td></tr>
+                <tr><td>Romeo's Pizza</td><td>27 E Railroad Ave</td><td>大份披薩</td><td class="price">$12起 <a href="https://www.romeosjamesburg.com" target="_blank" class="citation">[web:12]</a></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tabcontent').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
